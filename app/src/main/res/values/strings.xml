@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">The Digital News</string>
+    <string name="emptyScreen">Nothing big happening now \nplease come back later</string>
+    <string name="notInternet">Not Internet Connection</string>
+</resources>
