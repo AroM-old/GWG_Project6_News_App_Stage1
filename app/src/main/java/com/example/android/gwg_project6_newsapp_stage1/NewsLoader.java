@@ -18,8 +18,9 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
     /**
      * Construct a new {@link NewsLoader}.
+     *
      * @param context of the activity
-     * @param url to laod data from
+     * @param url     to laod data from
      */
     public NewsLoader(Context context, String url) {
         super(context);
@@ -36,7 +37,7 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
     @Override
     public List<News> loadInBackground() {
         Log.i(LOG_TAG, "TEST: News Activity loadInBackground() called");
-        if (url == null){
+        if (url == null) {
             return null;
         }
 

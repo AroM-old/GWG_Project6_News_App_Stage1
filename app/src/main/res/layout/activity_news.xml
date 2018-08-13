@@ -9,9 +9,10 @@
 
     <ListView
         android:id="@+id/list"
-        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:id="@+id/isEmpty"
@@ -25,20 +26,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:src="@drawable/ic_announcement_black_24dp"/>
+            android:src="@drawable/ic_announcement_black_24dp"
+            android:contentDescription="@string/warning_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/isEmpty_textView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="@dimen/twentyfour_text"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            android:gravity="center"
-            tools:text="Nothing big happening now\n please come back later"/>
+            tools:text="Nothing big happening now\n please come back later" />
     </LinearLayout>
-
 
 
     <ProgressBar

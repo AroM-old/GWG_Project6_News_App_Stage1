@@ -10,26 +10,27 @@
         android:id="@+id/thumbnail_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@drawable/ic_launcher_background"/>
+        android:contentDescription="@string/news_articles_thumbnails"
+        tools:src="@drawable/ic_launcher_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_toRightOf="@id/thumbnail_imageview"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/sixteen_padding"
-        android:paddingRight="@dimen/sixteen_padding"
-        android:orientation="vertical">
+        android:paddingRight="@dimen/sixteen_padding">
 
         <TextView
             android:id="@+id/sectionName_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/secondaryDarkColor"
             android:fontFamily="sans-serif-smallcaps"
-            android:textSize="@dimen/fourteen_text"
             android:textAllCaps="true"
             android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="@dimen/fourteen_text"
             tools:text="Baseball" />
 
         <TextView
@@ -39,17 +40,17 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
             android:textSize="@dimen/sixteen_text"
-            tools:text="Trio of home runs fuels Brewers’ 5-run first inning vs. Padres"/>
+            tools:text="Trio of home runs fuels Brewers’ 5-run first inning vs. Padres" />
 
         <TextView
             android:id="@+id/shortContent_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.4"
+            android:maxLines="3"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:textSize="@dimen/ten_text"
-            android:maxLines="3"
             android:visibility="gone"
             tools:text="MILWAUKEE — A pair of first-inning home runs in Tuesday’s series opener against the Padres didn’t do the job, so on Wednesday, the Brewers hit three." />
 
@@ -63,9 +64,9 @@
                 android:id="@+id/authorName_textview"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/twelve_marginTop"
                 android:layout_weight="1"
                 android:textSize="@dimen/eight_text"
-                android:layout_marginTop="@dimen/twelve_marginTop"
                 tools:text="By Adam McCalvy" />
 
             <TextView
@@ -74,8 +75,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/twelve_marginTop"
                 android:layout_weight="1"
-                android:textSize="@dimen/eight_text"
                 android:gravity="right"
+                android:textSize="@dimen/eight_text"
                 tools:text="06 Aug 2017" />
 
         </LinearLayout>

@@ -38,7 +38,7 @@ public class QueryUtils {
     /**
      * Query the guardian and return a list of objects.
      */
-    public static List<News> fetchNewsData(String requestUrl){
+    public static List<News> fetchNewsData(String requestUrl) {
         Log.i(LOG_TAG, "TEST: News Activity fet() called");
 
         //Create URL new object
@@ -80,7 +80,7 @@ public class QueryUtils {
         String jsonResponse = "";
 
         //If url null then return early
-        if (url == null){
+        if (url == null) {
             return jsonResponse;
         }
 
@@ -97,16 +97,16 @@ public class QueryUtils {
              * if request was successful (code 200) then
              * read input stream and parse response
              */
-            if (urlConnection.getResponseCode() == 200){
+            if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-            }else {
+            } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the Guardian JSON results.",e);
+            Log.e(LOG_TAG, "Problem retrieving the Guardian JSON results.", e);
         } finally {
-            if (urlConnection != null){
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
             /**
@@ -114,7 +114,7 @@ public class QueryUtils {
              *  the makeHttpRequest(URL url) method signature specifies than an IOException
              *  could be thrown.
              */
-            if (inputStream != null){
+            if (inputStream != null) {
                 inputStream.close();
             }
         }
@@ -186,17 +186,17 @@ public class QueryUtils {
 
                 //Extract the value of the key called tags
                 JSONArray tagsArray = currentNews.getJSONArray("tags");
-                            if (tagsArray.length() >= 1){
-                                for (int tagIndex = 0; tagIndex < 1; tagIndex++){
-                                    JSONObject tagsObject = tagsArray.getJSONObject(tagIndex);
-                                    String authorFullName = tagsObject.getString("webTitle");
+                if (tagsArray.length() >= 1) {
+                    for (int tagIndex = 0; tagIndex < 1; tagIndex++) {
+                        JSONObject tagsObject = tagsArray.getJSONObject(tagIndex);
+                        String authorFullName = tagsObject.getString("webTitle");
 
 
-                                    // Create a new {@link News} object with the title, section name, publication date,
-                                    // and url from the JSON response.
-                                    News news = new News(thumbnail, sectionName, title, trailText, authorFullName, originalPublicationDate, webUrl);
-                                    newsList.add(news);
-                                }
+                        // Create a new {@link News} object with the title, section name, publication date,
+                        // and url from the JSON response.
+                        News news = new News(thumbnail, sectionName, title, trailText, authorFullName, originalPublicationDate, webUrl);
+                        newsList.add(news);
+                    }
                 }
 
             }

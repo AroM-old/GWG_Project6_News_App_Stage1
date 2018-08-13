@@ -4,16 +4,18 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,24 +24,24 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>>{
-
-    /** Constant value for the news logs */
-    public static final String LOG_TAG = NewsActivity.class.getSimpleName();
-
-    /** URL for news data from the Guardian API */
-    public static final String REQUEST_URL = "https://content.guardianapis.com/search?q=technology&api-key=8a8cf61f-07ec-422f-a722-96d9a5b336bc&format=json&show-fields=headline,trailText,thumbnail,byline&show-tags=contributor";
-
-    /** Constant value for the news loader ID */
-    private static final int LOADER_ID = 1;
+public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
     /**
-     * Global variables declaration
+     * Constant value for the news logs
      */
-    private ListView lv;
-    private LinearLayout lvIsEmpty;
+    private static final String LOG_TAG = NewsActivity.class.getSimpleName();
+
+    /**
+     * URL for news data from the Guardian API
+     */
+    private static final String REQUEST_URL = "https://content.guardianapis.com/search?";
+
+    /**
+     * Constant value for the news loader ID
+     */
+    private static final int LOADER_ID = 1;
+
     private NewsAdapter adapter;
-    private ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +50,10 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_news);
 
         //Find a reference to the {@link ListView} in the layout
-        lv = findViewById(R.id.list);
+        ListView lv = findViewById(R.id.list);
 
         // Display message when not news are available
-        lvIsEmpty = findViewById(R.id.isEmpty);
+        LinearLayout lvIsEmpty = findViewById(R.id.isEmpty);
         lv.setEmptyView(lvIsEmpty);
 
         // Create a new {@link ArrayAdapter}of News Articles
@@ -81,13 +83,13 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
-        cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
         // If there is a network connection, fetch data
-        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()){
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
             // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
@@ -98,7 +100,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(LOADER_ID, null, this);
-        }else{
+        } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
             setEmptyStatus(R.string.notInternet);
@@ -109,7 +111,22 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
         Log.i(LOG_TAG, "TEST: News Activity onCreateLoader() called");
-        return new NewsLoader(this, REQUEST_URL);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String sectionNews = sharedPreferences.getString(getString(R.string.settings_section_key), getString(R.string.settings_section_default));
+
+        Uri baseUri = Uri.parse(REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("q", sectionNews);
+        uriBuilder.appendQueryParameter("format", "json");
+        uriBuilder.appendQueryParameter("show-fields", "headline, trailText, thumbnail, byline");
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("order-by", "newest");
+        uriBuilder.appendQueryParameter("api-key", "8a8cf61f-07ec-422f-a722-96d9a5b336bc");
+
+        Log.i(LOG_TAG, "................TEST URL constructor: " + uriBuilder.toString());
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -123,7 +140,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
          * data set. This will trigger the ListView to update.
          */
         adapter.clear();
-        if (data != null && !data.isEmpty()){
+        if (data != null && !data.isEmpty()) {
             adapter.addAll(data);
 
         }
@@ -136,7 +153,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     // Display empty status information
-    public void setEmptyStatus(int resource){
+    private void setEmptyStatus(int resource) {
         View loadIndicator = findViewById(R.id.progressBar);
         loadIndicator.setVisibility(View.GONE);
 
@@ -145,5 +162,22 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         imageView.setVisibility(View.VISIBLE);
         TextView emptyState = findViewById(R.id.isEmpty_textView);
         emptyState.setText(resource);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings){
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

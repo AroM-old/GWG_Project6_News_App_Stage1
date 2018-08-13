@@ -1,7 +1,6 @@
 package com.example.android.gwg_project6_newsapp_stage1;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -18,14 +18,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class NewsAdapter extends ArrayAdapter<News> {
 
     // Set constant variable for logs
     private static final String LOG_TAG = NewsAdapter.class.getSimpleName();
 
-    public NewsAdapter(Activity context, ArrayList<News> news){
-        super(context, 0 , news);
+    public NewsAdapter(Activity context, ArrayList<News> news) {
+        super(context, 0, news);
     }
 
     @NonNull
@@ -35,14 +36,14 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Check if the view is being reused, otherwise inflate the view
         View listItemView = convertView;
 
-        if(listItemView == null){
+        if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.news_articles_list_item,parent,false);
+                    .inflate(R.layout.news_articles_list_item, parent, false);
 
             // Set background color to views
-            if (position % 2 == 1){
+            if (position % 2 == 1) {
                 listItemView.setBackgroundResource(R.color.primaryLightColor);
-            }else {
+            } else {
                 listItemView.setBackgroundResource(R.color.secondaryLightColor);
             }
         }
@@ -53,7 +54,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Find the news thumbnail image with ID thumbnail_imageview
         ImageView imageThumbnail = listItemView.findViewById(R.id.thumbnail_imageview);
         Picasso.get().load(newsArticles.getThumbnailImage())
-                .resize(300,300)
+                .resize(300, 300)
                 .into(imageThumbnail);
 
         //Find the news section name with ID sectionName_textview
@@ -77,7 +78,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView publicationDate = listItemView.findViewById(R.id.publishDate_textview);
         String newsDate = newsArticles.getPublicationDay();
         // New simple date format
-        DateFormat guardianDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
+        DateFormat guardianDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.US);
         try {
             Date newsDateParse = guardianDate.parse(newsDate);
             String newsDateString = formatDate(newsDateParse);
@@ -91,10 +92,10 @@ public class NewsAdapter extends ArrayAdapter<News> {
     }
 
     /**
-    *  Return the formatted date string (i. e. Jul 06, 2009)
-    */
-    private String formatDate(Date dateObject){
-        DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
+     * Return the formatted date string (i. e. Jul 06, 2009)
+     */
+    private String formatDate(Date dateObject) {
+        DateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
         return dateFormat.format(dateObject);
     }
 }

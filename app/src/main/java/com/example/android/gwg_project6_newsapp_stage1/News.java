@@ -1,7 +1,5 @@
 package com.example.android.gwg_project6_newsapp_stage1;
 
-import android.widget.ImageView;
-
 /**
  * {@link News} represents every article.
  * Each object has 6 properties: Section Name, Headline Title, Short Desc,

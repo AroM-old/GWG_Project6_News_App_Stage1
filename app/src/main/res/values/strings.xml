@@ -2,4 +2,12 @@
     <string name="app_name">The Digital News</string>
     <string name="emptyScreen">Nothing big happening now \nplease come back later</string>
     <string name="notInternet">Not Internet Connection</string>
+    <string name="warning_icon">Warning icon</string>
+    <string name="news_articles_thumbnails">News Articles Thumbnails</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_menu_item">News Settings</string>
+    <string name="settings_section_name">Section Name</string>
+    <string name="settings_section_key" translatable="false">section_name</string>
+    <string name="settings_section_default" translatable="false">world</string>
+
 </resources>
