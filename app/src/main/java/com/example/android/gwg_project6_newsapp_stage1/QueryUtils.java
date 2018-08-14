@@ -56,6 +56,7 @@ public class QueryUtils {
         List<News> newsArticles = extractFeatureFromJson(jsonResponse);
 
         // Return list of {@link News}
+        Log.i(LOG_TAG, "TEST Check.....yes/no?" + newsArticles);
         return newsArticles;
     }
 
@@ -69,6 +70,7 @@ public class QueryUtils {
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Problem building URL", e);
         }
+        Log.i(LOG_TAG, "TEST url......: " + url);
         return url;
     }
 
@@ -207,7 +209,7 @@ public class QueryUtils {
             // with the message from the exception.
             Log.e(LOG_TAG, "Problem parsing the news JSON results", e);
         }
-
+        Log.i(LOG_TAG,"TEST json........yes/no?" + newsList);
         return newsList;
     }
 
