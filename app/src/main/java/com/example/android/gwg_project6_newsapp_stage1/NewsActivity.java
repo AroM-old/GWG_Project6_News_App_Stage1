@@ -63,24 +63,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // so the list can be populated in the user interface
         lv.setAdapter(adapter);
 
-        // Set an item click listener on the ListView, which sends an intent to a web browser
-        // to open a website with more information about the selected news.
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Find the current news that was clicked on
-                News news = adapter.getItem(position);
-
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri uriNews = Uri.parse(news.getWebsiteLink());
-
-                // Create a new intent to view the news URI
-                Intent webSite = new Intent(Intent.ACTION_VIEW, uriNews);
-
-                // Send the intent to launch a new activity
-                startActivity(webSite);
-            }
-        });
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -105,6 +87,25 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             // First, hide loading indicator so error message will be visible
             setEmptyStatus(R.string.notInternet);
         }
+
+        // Set an item click listener on the ListView, which sends an intent to a web browser
+        // to open a website with more information about the selected news.
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Find the current news that was clicked on
+                News news = adapter.getItem(position);
+
+                // Convert the String URL into a URI object (to pass into the Intent constructor)
+                Uri uriNews = Uri.parse(news.getWebsiteLink());
+
+                // Create a new intent to view the news URI
+                Intent webSite = new Intent(Intent.ACTION_VIEW, uriNews);
+
+                // Send the intent to launch a new activity
+                startActivity(webSite);
+            }
+        });
 
     }
 

@@ -41,6 +41,12 @@ public class QueryUtils {
     public static List<News> fetchNewsData(String requestUrl) {
         Log.i(LOG_TAG, "TEST: News Activity fet() called");
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+
         //Create URL new object
         URL url = createURL(requestUrl);
 
@@ -56,6 +62,7 @@ public class QueryUtils {
         List<News> newsArticles = extractFeatureFromJson(jsonResponse);
 
         // Return list of {@link News}
+        Log.i(LOG_TAG, "TEST: Fetch Data..........Yes" + newsArticles);
         return newsArticles;
     }
 
@@ -207,7 +214,7 @@ public class QueryUtils {
             // with the message from the exception.
             Log.e(LOG_TAG, "Problem parsing the news JSON results", e);
         }
-
+        Log.i(LOG_TAG, "TEST: JSON.......Yes" + newsList);
         return newsList;
     }
 

@@ -20,7 +20,7 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
      * Construct a new {@link NewsLoader}.
      *
      * @param context of the activity
-     * @param url     to laod data from
+     * @param url     to load data from
      */
     public NewsLoader(Context context, String url) {
         super(context);
