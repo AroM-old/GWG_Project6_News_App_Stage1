@@ -90,7 +90,7 @@ public class News {
 
     /**
      *
-     * @return publivation date
+     * @return publication date
      */
     public String getPublicationDay() {
         return publicationDay;

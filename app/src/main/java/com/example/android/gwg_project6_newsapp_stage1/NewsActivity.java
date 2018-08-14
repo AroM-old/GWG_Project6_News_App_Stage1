@@ -34,7 +34,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * URL for news data from the Guardian API
      */
-    private static final String REQUEST_URL = "https://content.guardianapis.com/search?";
+    private static final String REQUEST_URL = "https://content.guardianapis.com/search";
 
     /**
      * Constant value for the news loader ID
@@ -121,7 +121,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
         uriBuilder.appendQueryParameter("q", sectionNews);
         uriBuilder.appendQueryParameter("format", "json");
-        uriBuilder.appendQueryParameter("show-fields", "headline, trailText, thumbnail, byline");
+        uriBuilder.appendQueryParameter("show-fields", "all");
         uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("order-by", "newest");
         uriBuilder.appendQueryParameter("api-key", "8a8cf61f-07ec-422f-a722-96d9a5b336bc");

@@ -76,6 +76,7 @@ public class QueryUtils {
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Problem building URL", e);
         }
+        Log.i(LOG_TAG, "TEST url from api.......Yes/No?" + url);
         return url;
     }
 
@@ -125,6 +126,7 @@ public class QueryUtils {
                 inputStream.close();
             }
         }
+        Log.i(LOG_TAG, "TEST Json Response......yes/no?" + jsonResponse);
         return jsonResponse;
     }
 
