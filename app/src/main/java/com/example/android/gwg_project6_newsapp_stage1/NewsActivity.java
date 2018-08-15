@@ -115,6 +115,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         String sectionNews = sharedPreferences.getString(getString(R.string.settings_section_key), getString(R.string.settings_section_default));
+        String orderBy = sharedPreferences.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
 
         Uri baseUri = Uri.parse(REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
@@ -123,7 +124,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         uriBuilder.appendQueryParameter("format", "json");
         uriBuilder.appendQueryParameter("show-fields", "all");
         uriBuilder.appendQueryParameter("show-tags", "contributor");
-        uriBuilder.appendQueryParameter("order-by", "newest");
+        uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("api-key", "8a8cf61f-07ec-422f-a722-96d9a5b336bc");
 
         Log.i(LOG_TAG, "................TEST URL constructor: " + uriBuilder.toString());
@@ -137,8 +138,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Hide loading indicator because the data has been loaded
         setEmptyStatus(R.string.emptyScreen);
 
-        /** If there is a valid list of {@link News}s, then add them to the adapter's
-         * data set. This will trigger the ListView to update.
+        /* If there is a valid list of {@link News}s, then add them to the adapter's
+          data set. This will trigger the ListView to update.
          */
         adapter.clear();
         if (data != null && !data.isEmpty()) {

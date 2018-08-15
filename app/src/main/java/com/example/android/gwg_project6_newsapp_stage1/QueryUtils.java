@@ -101,10 +101,6 @@ public class QueryUtils {
             urlConnection.setConnectTimeout(1500 /* milliseconds */);
             urlConnection.connect();
 
-            /**
-             * if request was successful (code 200) then
-             * read input stream and parse response
-             */
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
@@ -117,11 +113,6 @@ public class QueryUtils {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
-            /**
-             *  Closing the input stream could throw an IOException, which is why
-             *  the makeHttpRequest(URL url) method signature specifies than an IOException
-             *  could be thrown.
-             */
             if (inputStream != null) {
                 inputStream.close();
             }
